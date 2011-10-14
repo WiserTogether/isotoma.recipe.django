@@ -62,6 +62,13 @@ settings
     That way you just need to change this value from "settings" to "production".
     Defaults to "settings".
 
+settings-outside-project
+    This is a workaround to support the old-style manage.py that attempts to 
+    load settings both as project.settings and as settings. For backwards
+    compatability, if your settings file is project/local_settings.py, you
+    can enable set settings-outside-project=true and the management scripts
+    will use import settings instead of import project.settings.
+
 extra-paths
     Any extra paths to add to sys.path that should be made available to your
     project egg / develop-egg.

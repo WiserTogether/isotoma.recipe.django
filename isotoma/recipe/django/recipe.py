@@ -25,6 +25,8 @@ class Recipe(zc.recipe.egg.Egg):
         self.options.setdefault("settings", "settings")
         # whether to generate a wsgi file
         self.options.setdefault("wsgi", "false")
+        # whether to expect settings inside project, or not
+        self.options.setdefault("settings-outside-project", "false")
 
         # get the extra paths that we might need
         if self.options.has_key("extra-paths"):
@@ -152,8 +154,14 @@ class Recipe(zc.recipe.egg.Egg):
             for var, value in self.environment_vars.iteritems():
                 prefix += "os.environ['%s'] = %s\n" % (var, value)
 
-        return "%simport %s.%s as settings" % (
-            prefix,
-            self.options["project"],
-            self.options["settings"]
-        )
+        if self.options['settings-outside-project'].lower() == 'true':
+            return "%simport %s as settings" % (
+                prefix,
+                self.options["settings"]
+            )
+        else:
+            return "%simport %s.%s as settings" % (
+                prefix,
+                self.options["project"],
+                self.options["settings"]
+            )
