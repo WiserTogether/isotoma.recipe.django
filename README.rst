@@ -69,6 +69,13 @@ settings-outside-project
     can enable set settings-outside-project=true and the management scripts
     will use import settings instead of import project.settings.
 
+control-script-initialization
+    Add some initialization code to the control script (manage.py). For instance,
+    to enable newrelic, e.g.::
+        control-script-initialization =
+            import newrelic.agent
+            newrelic.agent.initialize('${buildout:directory}/newrelic.ini')
+
 extra-paths
     Any extra paths to add to sys.path that should be made available to your
     project egg / develop-egg.
